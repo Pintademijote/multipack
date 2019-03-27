@@ -1,0 +1,76 @@
+#' @export
+plot_obs=function(temp,dist=NULL,metrics,carab=NULL,sp_name=NULL,dist_col=NULL){
+  listplot=list()
+  
+  forgg=data.frame(NULL)
+  if(!is.null(dist) & is.null(carab)){
+    for (i in metrics) {
+      med=apply(temp[temp$Metric==i,5:ncol(temp)-1],2,mean)
+      minY=med-(apply(temp[temp$Metric==i,5:ncol(temp)-1],2,sd))
+      maxY=med+(apply(temp[temp$Metric==i,5:ncol(temp)-1],2,sd))
+      metricgg=rep(i,ncol(temp[temp$Metric==i,5:ncol(temp)-1]))
+      distgg=as.numeric(as.character(dist))
+      forgg=rbind(forgg,cbind(med,minY,maxY,metricgg,distgg))
+      rm(med,minY,maxY,metricgg,distgg)
+      forgg$med=as.numeric(as.character(forgg$med))
+      forgg$minY=as.numeric(as.character(forgg$minY))
+      forgg$maxY=as.numeric(as.character(forgg$maxY))
+      forgg$distgg=as.numeric(as.character(forgg$distgg))
+      
+      p1=ggplot(forgg[forgg$metricgg==i,])+
+        geom_point(aes(x = distgg,y=med))+
+        geom_ribbon(aes(ymin=minY, ymax=maxY,
+                        x=distgg), alpha = 0.3)+
+        xlab("Distance") + ylab(i)
+      
+      listplot[[i]]=p1
+    }
+    return(listplot)
+  }
+  
+  if(!is.null(carab)){
+    list_plot_scale=list()
+    forgg_sca=setNames(data.frame(matrix(ncol = 7, nrow = 0)), c("med","minY","maxY","metricgg", "id","scale_gg","metric_obs"))
+    forgg=data.frame(NULL)
+    #dist_col=paste("w",dist,sep = "")
+    for (i in metrics) {
+      listplot=list()
+      carab_temp=carab[carab[,1] %in% levels(temp$id),]
+      carab_temp=droplevels(carab_temp)
+      med=aggregate(carab_temp[,sp_name], list(carab_temp[,1]), mean)[,2]
+      minY=med-aggregate(carab_temp[,sp_name], list(carab_temp[,1]), sd)[,2]
+      maxY=med+aggregate(carab_temp[,sp_name], list(carab_temp[,1]), sd)[,2]
+      metric_temp=temp[temp$Metric==i,c(1,5:ncol(temp)-1)]
+      metric_temp=metric_temp[order(metric_temp$id),]
+      metricgg=rep(i,length(med))
+      
+      
+      forgg=rbind(forgg,cbind(med,minY,maxY,metricgg,metric_temp))
+      #rm(med,minY,maxY,metricgg,metric_temp)
+      forgg$med=as.numeric(as.character(forgg$med))
+      forgg$minY=as.numeric(as.character(forgg$minY))
+      forgg$maxY=as.numeric(as.character(forgg$maxY))
+      
+      ###
+      
+      for (sca in dist_col) {
+        scale_gg=rep(sca,length(med))
+        
+        forgg_sca=rbind(forgg_sca,setNames(cbind(forgg[forgg$metricgg==i,1:5],scale_gg,forgg[forgg$metricgg==i,sca]),names(forgg_sca)))
+        #colnames(forgg_sca)=c("med","minY","maxY","metricgg", "id","scale_gg","metric_obs")
+        
+        p1=ggplot(forgg_sca[forgg_sca$metricgg==i & forgg_sca$scale_gg==sca,],aes())+
+          geom_point(aes(y = med,x=metric_obs))+
+          geom_ribbon(aes(ymin=minY, ymax=maxY,
+                          x=metric_obs), alpha = 0.3)+
+          xlab(paste(i,"at",sca)) + ylab("Abondance")
+        
+        listplot[[sca]]=p1
+      }
+      list_plot_scale[[i]]=listplot
+      
+    }
+  }
+  
+  return(list_plot_scale)
+}

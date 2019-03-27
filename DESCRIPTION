@@ -1,0 +1,35 @@
+Package: Multi
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Pierre-Gilles",
+           family = "Lemasle",
+           role = c("aut", "cre"),
+           email = "pg.lemasle@gmail.com")
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports:
+    FactoMineR,
+    factoextra,
+	ggcorrplot,
+	mgcv,
+	corrplot,
+	raster,
+	RColorBrewer,
+	earth,
+	shinycssloaders,
+	Rmpfr,
+	caret,
+	ggplot2,
+	shiny,
+	rgdal,
+	raster,
+	leaflet,
+	DT,
+	shinyFiles,
+	plotly,
+	digest,
+	magrittr
+RoxygenNote: 6.1.1
