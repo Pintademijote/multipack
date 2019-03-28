@@ -19,7 +19,7 @@ RV_COR=function(Varia_paysage_multi,metrics,dist){
   seq_group=seq(4,ncol(Varia_paysage_multi)+1,length(dist))
 
   pb <- txtProgressBar(min = 0, max = length(seq_group), style = 3)
-
+  shin_progress=length(seq_group)*length(seq_group)
   for (i in 1:(length(seq_group)-1)) {
     Sys.sleep(0.1)
     setTxtProgressBar(pb, i)
@@ -27,6 +27,8 @@ RV_COR=function(Varia_paysage_multi,metrics,dist){
       temp=coeffRV(Varia_paysage_multi[,seq_group[i]:(seq_group[i+1]-1)],Varia_paysage_multi[,seq_group[j]:(seq_group[j+1]-1)])
       coefRV[i,j]=temp$rv
       pvalue[i,j]=temp$p.value
+      Sys.sleep(0.1)
+      incProgress(1/shin_progress)
     }
   }
 

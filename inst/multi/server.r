@@ -371,7 +371,9 @@ server <- function(input, output,session) {
     Varia_paysage_multi=formultivariate(random_pts,dist(),metrics())
     print("3")
 
+    withProgress(message = "Computed RV coefficients", value = 0, {
     test=RV_COR(Varia_paysage_multi,metrics(),dist())
+    })
     print("4")
 
     temp_cor=findCorrelation(test[[1]], cutoff = 0.7, exact = TRUE)
