@@ -19,10 +19,6 @@ Return a vector of the metrics or scales used in Chloe in your analysis.
 `read.Chloe.properties()` Return a vector of the metrics or the scales you used in Chloe for your
 analysis
 }
-\details{
-This function is made to be used to generate a tab used after in results_lm(), results_gam(),results_MARS,
- results_ALL() and tab_for_model().
-}
 \author{
 Pierre-Gilles Lemasle <pg.lemasle@gmail.com>
 }

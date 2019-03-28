@@ -13,7 +13,7 @@ plot_obs(temp, dist = NULL, metrics, carab = NULL, sp_name = NULL,
 
 \item{dist}{Vector of scales you choosed in Chloe when you created the ascii whith Cloe}
 
-\item{metrics}{Vector of metrics of 1 or more you choosed in Chloe when you created the ascii whith Cloe}
+\item{metrics}{Vector of metrics of 1 or more you choosed in Chloe when you created the ascii whith Chloe}
 
 \item{carab}{Optionnal argument containing your tab of species sampling, the tab must included a "id"
 corresponding of the name of the sampling points?}
