@@ -372,7 +372,7 @@ server <- function(input, output,session) {
     print("3")
 
     withProgress(message = "Computed RV coefficients", value = 0, {
-    test=RV_COR(Varia_paysage_multi,metrics(),dist())
+    test=RV_COR_shiny(Varia_paysage_multi,metrics(),dist())
     })
     print("4")
 
