@@ -387,6 +387,5 @@ server <- function(input, output,session) {
                hc.order = FALSE)
   })
 
-
   #outputOptions(output, "mymap", suspendWhenHidden = FALSE)
 }

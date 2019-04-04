@@ -70,7 +70,12 @@ ui <- fluidPage(
 
                )
              )
-    )
+    ),
+    tabPanel("Help",
+             titlePanel("Help"),
+             mainPanel(
+               includeHTML("Method_command.html")
+             ))
   )
 
 )
