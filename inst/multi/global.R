@@ -9,6 +9,7 @@ library(shinycssloaders)
 library(earth)
 library(mgcv)
 library(FactoMineR)
+library(caret)
 
 
 RV_COR_shiny=function(Varia_paysage_multi,metrics,dist){
