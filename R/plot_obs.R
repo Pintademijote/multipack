@@ -16,7 +16,9 @@
 #'
 #' @author Pierre-Gilles Lemasle <pg.lemasle@gmail.com>
 #' @return Return a list of plot(s) of the length of "metrics".
+#' @importFrom ggplot2 ggplot
 #' @export
+#'
 plot_obs=function(temp,dist=NULL,metrics,carab=NULL,sp_name=NULL,dist_col=NULL){
   listplot=list()
 
