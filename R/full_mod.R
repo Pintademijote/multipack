@@ -1,5 +1,4 @@
 #' @export
-#'
 
 full_mod=function(Varia_paysage_model,dist,metrics,Sp_Name,tab=F){
 tempdata=NULL
