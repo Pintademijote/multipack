@@ -31,5 +31,6 @@ Imports:
 	shinyFiles,
 	plotly,
 	digest,
-	magrittr
+	magrittr,
+	pdp
 RoxygenNote: 6.1.1
