@@ -2,6 +2,7 @@
 
 export(RV_COR)
 export(cor_spatial)
+export(findCorrelation_hi)
 export(formodel)
 export(formultivariate)
 export(full_mod)
