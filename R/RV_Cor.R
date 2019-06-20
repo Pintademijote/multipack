@@ -18,11 +18,12 @@ RV_COR=function(Varia_paysage_multi,metrics,dist){
   colnames(coefRV) = row.names(coefRV) = metrics
   colnames(pvalue) = row.names(pvalue) = metrics
   
-  pb <- txtProgressBar(min = 0, max = length(seq_group), style = 3)
-  
+  pb <- txtProgressBar(min = 0, max = length(metrics), style = 3)
+  rep=0
   for (i in metrics) {
     Sys.sleep(0.1)
-    setTxtProgressBar(pb, i)
+    rep=rep+1
+    setTxtProgressBar(pb, rep)
     for (j in metrics) {
       temp=coeffRV(Varia_paysage_multi[Varia_paysage_multi$Metric==i,4:(3+length(scales))],
                    Varia_paysage_multi[Varia_paysage_multi$Metric==j,4:(3+length(scales))])
