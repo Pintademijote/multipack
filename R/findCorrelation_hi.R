@@ -1,6 +1,4 @@
 #' @export
-#'
-#'
 findCorrelation_hi=function (cor_matrix, cor_pvalue_matrix, threshold){
   results = list()
   x1 = cor_matrix
