@@ -14,10 +14,11 @@
 #' @export
 RV_COR=function(Varia_paysage_multi,metrics,dist){
   coefRV=matrix(ncol=length(metrics),nrow=length(metrics))
+  coefRV[lower.tri(coefRV)]=2
   pvalue=matrix(ncol=length(metrics),nrow=length(metrics))
   colnames(coefRV) = row.names(coefRV) = metrics
   colnames(pvalue) = row.names(pvalue) = metrics
-  
+
   pb <- txtProgressBar(min = 0, max = length(metrics), style = 3)
   rep=0
   for (i in metrics) {
@@ -25,13 +26,16 @@ RV_COR=function(Varia_paysage_multi,metrics,dist){
     rep=rep+1
     setTxtProgressBar(pb, rep)
     for (j in metrics) {
+      if(is.na(coefRV[i,j])){next}
       temp=coeffRV(Varia_paysage_multi[Varia_paysage_multi$Metric==i,4:(3+length(scales))],
                    Varia_paysage_multi[Varia_paysage_multi$Metric==j,4:(3+length(scales))])
       coefRV[i,j]=temp$rv
       pvalue[i,j]=temp$p.value
-      
+
     }
   }
-  
+  coefRV[upper.tri(coefRV)]=t(coefRV)[upper.tri(coefRV)]
+  diag(coefRV)=1
+  pvalue[upper.tri(pvalue)]=t(pvalue)[upper.tri(pvalue)]
   return(list(coefRV,pvalue))
 }
