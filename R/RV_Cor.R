@@ -15,6 +15,7 @@
 RV_COR=function(Varia_paysage_multi,metrics,dist){
   coefRV=matrix(ncol=length(metrics),nrow=length(metrics))
   coefRV[lower.tri(coefRV)]=2
+  diag(coefRV)=2
   pvalue=matrix(ncol=length(metrics),nrow=length(metrics))
   colnames(coefRV) = row.names(coefRV) = metrics
   colnames(pvalue) = row.names(pvalue) = metrics
