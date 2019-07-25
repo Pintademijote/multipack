@@ -52,11 +52,44 @@ server <- function(input, output,session) {
   })
 
   r <- reactive({
+    if(is.null(input$file_ascii)) return(NULL)
     req(input$file_ascii)
     req(pass_dir_map)
+
     raster(paste0(dir_map(),basename(input$file_ascii$name)))
 
   })
+
+  output$fileUploaded <- reactive({
+    return(!is.null(r()))
+  })
+
+
+  output$checkbox<-renderUI({
+    if(!is.null(r())){
+    checkboxGroupInput("choicescat","Category to display", choices = unique(r())
+    )
+    }
+  })
+
+  # r2 <- reactive({
+  #   req(input$choicescat)
+  #
+  #   print("r2passe")
+  #   r()[r()[] %in% input$choicescat]
+  #
+  # })
+  #
+  r2 <- eventReactive(input$choicescat,{
+
+
+    print("r2passe")
+    tempR2=r()
+    tempR2[!(tempR2[] %in% input$choicescat)] = NA
+    return(tempR2)
+
+  })
+
 
   temp <- reactive({
     req(points())
@@ -256,7 +289,10 @@ server <- function(input, output,session) {
 
   observeEvent(temp(),{
 
-    pal <- colorNumeric(c("#ffb3ba","#ffdfba","#ffffba","#baffc9","#bae1ff"), values(r()),
+    if(is.null(input$choicesca)){f=r()}
+    if(!is.null(input$choicesca)){f=r2()}
+
+    pal <- colorNumeric(c("#ffb3ba","#ffdfba","#ffffba","#baffc9","#bae1ff"), values(f),
                         na.color = "transparent")
 
     print("OK5")
@@ -269,14 +305,28 @@ server <- function(input, output,session) {
       leaflet(temp()) %>%
         addTiles() %>%
         addProviderTiles("Esri.WorldImagery") %>%
-        addRasterImage(r(), opacity = 0.5, colors = pal) %>%
+        addRasterImage(f, opacity = 0.5, colors = pal) %>%
         addCircles(popup = as.character(points()$ID),radius=rep(1000,30), color="#6495ed",
                    opacity = 0.5, fill = TRUE, fillColor = "#6495ed",
                    fillOpacity = 0.2,layerId=as.character(points()$ID)) %>%
-        addLegend(pal = pal, values = values(r()),
+        addLegend(pal = pal, values = values(f),
                   title = "Occupation du sol")
 
     })
+  })
+
+
+  observeEvent(r2(),{
+    pal <- colorNumeric(c("#ffb3ba","#ffdfba","#ffffba","#baffc9","#bae1ff"), values(r2()),
+                        na.color = "transparent")
+
+    leafletProxy('mymap') %>%
+      clearImages() %>%
+      clearControls() %>%
+      addRasterImage(r2(), opacity = 0.5, colors = pal) %>%
+      addLegend(pal = pal, values = values(r2()),
+                title = "Occupation du sol")
+
   })
 
 
@@ -388,4 +438,6 @@ server <- function(input, output,session) {
   })
 
   #outputOptions(output, "mymap", suspendWhenHidden = FALSE)
+  outputOptions(output, 'fileUploaded', suspendWhenHidden=FALSE)
+
 }

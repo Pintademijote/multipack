@@ -14,8 +14,7 @@ ui <- fluidPage(
                  selectInput("scales",  h5("Scale"), choices = NULL),
                  selectInput("species",  h5("Species"), choices = NULL)
 
-
-                 ),
+               ),
                mainPanel(
                  plotlyOutput("plot1", height = "400px") %>% withSpinner(color="#0dc5c1"),
                  plotlyOutput("plot2", height = "400px") %>% withSpinner(color="#0dc5c1"),
@@ -37,7 +36,20 @@ ui <- fluidPage(
                    "text/comma-separated-values,text/plain",
                    ".asc")),
                  fileInput("file_points", h5("Coordonnees Points")),
-                 actionButton("do", "Click Me")
+                 actionButton("do", "Click Me"),
+
+                 radioButtons(
+                   inputId="radio",
+                   label="Variable Selection Type:",
+                   choices=list(
+                     "All",
+                     "Manual Select"),
+                   selected="All"),
+
+                 conditionalPanel(
+                   condition = "input.radio != 'All' & output.fileUploaded ",
+                   uiOutput("checkbox")
+                   )
 
 
                ),
