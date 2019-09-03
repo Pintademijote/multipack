@@ -1,19 +1,18 @@
 #' @export
-findCorrelation_hi=function (cor_matrix, cor_pvalue_matrix, threshold)
-{
+findCorrelation_hi=function (cor_matrix, cor_pvalue_matrix, threshold){
   results = list()
   x1 = cor_matrix
   x2 = cor_pvalue_matrix
   keep_metric_all = NULL
   rm_metric_all = NULL
   diag(x1) = NA
+  # x1[upper.tri(x1, diag = TRUE)]=NA
   order_increase = order(apply(x1, 1, function(x) {
     mean(x, na.rm = T)
   }))
   x1 = x1[order_increase, order_increase]
-  x1=abs(x1)
   for (i in colnames(cor_matrix)[order_increase]) {
-    temp_cor_index = which(x1 > threshold , arr.ind = TRUE)
+    temp_cor_index = which(x1 > threshold, arr.ind = TRUE)
     temp_cor_index = temp_cor_index[apply(temp_cor_index,
                                           1, function(x) {
                                             length(unique(x)) == 2
@@ -27,6 +26,7 @@ findCorrelation_hi=function (cor_matrix, cor_pvalue_matrix, threshold)
                                         i)]
         rm_metric = "ignore"
         nb_stop = length(which(x1[, i] >= threshold))
+        # print(i)
         while (continue) {
           rep = rep + 1
           j = which(x1[, i] >= threshold)[1]
@@ -40,6 +40,7 @@ findCorrelation_hi=function (cor_matrix, cor_pvalue_matrix, threshold)
             names1_2 = c(name1, name2)
             keep_metric = names1_2[which.max(coefs)]
             rm_metric = names1_2[which.min(coefs)]
+            # print(rm_metric)
             if (col_name == rm_metric) {
               continue = FALSE
             }
@@ -59,8 +60,11 @@ findCorrelation_hi=function (cor_matrix, cor_pvalue_matrix, threshold)
       }
     }
   }
+
+
   results$keep = keep_metric_all
   results$rm_names = rm_metric_all
   results$remove = which(colnames(cor_matrix) %in% rm_metric_all)
   return(results)
 }
+

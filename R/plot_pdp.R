@@ -35,7 +35,7 @@ plot_pdp=function(train_mod,res_variable_importance,sp_name,type){
 
   if(length(interact_tab)>0){
     for (i in 1:length(interact_tab)) {
-      plot_list[[paste(interact_tab[[i]], sep="", collapse="-")]]=partial(tuned_mars, pred.var = as.character(interact_tab[[i]]), grid.resolution = 20) %>%
+      plot_list[[paste(interact_tab[[i]], sep="", collapse="-")]]=partial(train_mod, pred.var = as.character(interact_tab[[i]]), grid.resolution = 20) %>%
         plotPartial(levelplot = FALSE, zlab = sp_name, drape = TRUE, colorkey = TRUE)
     }
   }
