@@ -20,7 +20,7 @@ result_GLM=function (x, dist, metrics, Sp_Name, tab = F,family_choice=poisson())
   for (j in metrics) {
     for (i in sub("^", "w", dist)) {
       form = as.formula(paste(Sp_Name, "~", i))
-      temp=x[x$Metric == j, ]
+      temp<<-x[x$Metric == j, ]
       model=glm(form,family = poisson(),
                 data = temp)
       radj =  DescTools::PseudoR2(model,"McFadden")
