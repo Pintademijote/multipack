@@ -1,4 +1,4 @@
-#' Computed the R adjusted of the abundance/metric value models at each scales with gam method.
+#' Computed the R adjusted of the abundance/metric value models at each scales with MARS model
 #'
 #' `result_MARS()` Return plots or tab depending of the "tab" argument of the R adjusted of abundance/metric value models
 #' at each scales for gam with the corresponding signifiance if it can be tested.
