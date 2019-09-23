@@ -32,5 +32,13 @@ Imports:
 	plotly,
 	digest,
 	magrittr,
-	pdp
+	pdp,
+	pheatmap,
+	DescTools,
+	viridis,
+	doSNOW,
+	parallel,
+	ggpubr,
+	xlsx,
+	dplyr
 RoxygenNote: 6.1.1
