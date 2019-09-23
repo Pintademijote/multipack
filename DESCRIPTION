@@ -40,5 +40,6 @@ Imports:
 	parallel,
 	ggpubr,
 	xlsx,
-	dplyr
+	dplyr,
+	glmnet
 RoxygenNote: 6.1.1
